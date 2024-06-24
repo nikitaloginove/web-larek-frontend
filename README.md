@@ -58,3 +58,117 @@ export interface ICard {
 	price: number | null;
 	disabled?: boolean;
 }
+
+```
+
+***Интерфейс заказа***
+
+```
+
+export interface IOrder {
+	payment?: string;
+	email?: string;
+	phone?: string;
+	address?: string;
+	total: number;
+	items: string[];
+}
+
+```
+
+***Интерфейс страницы***
+
+```
+
+export interface IPage {
+	counter: number;
+	catalog: HTMLElement[];
+	locked: boolean;
+}
+
+```
+
+***Интерфейс состояния приложения***
+
+```
+
+export interface IAppState {
+	catalog: ICard[];
+}
+
+```
+
+***Интерфейс действий с карточкой***
+
+```
+
+export interface ICardActions {
+	onClick: (event: MouseEvent) => void;
+}
+
+```
+
+***Интерфейс ответа от сервера***
+
+```
+
+export interface IServerResponse {
+	items: ICard[];
+}
+
+```
+
+***Интерфейс корзины товаров***
+
+```
+
+export interface IBasketView {
+	items: HTMLElement[];
+	price: number;
+}
+
+```
+
+***Интерфейс элемента в корзине***
+
+```
+
+export interface IBasketItem {
+	number: number;
+	title: string;
+	price: number;
+}
+
+```
+
+***Интерфейс ошибок***
+
+```
+
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
+
+```
+
+***Интерфейс формы заказа***
+
+```
+
+export interface IOrderForm {
+	payment: string;
+	address: string;
+	email: string;
+	phone: string;
+}
+
+```
+
+***Интерфейс данных пользователя***
+
+```
+
+export interface IContacts {
+	phone: string;
+	email: string;
+}
+
+```
