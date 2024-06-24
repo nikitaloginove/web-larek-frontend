@@ -48,6 +48,8 @@ yarn build
 
 **Интерфейс карточки**
 
+```
+
 export interface ICard {
 	id: string;
 	description?: string;
