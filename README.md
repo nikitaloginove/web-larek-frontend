@@ -42,5 +42,18 @@ yarn build
 
 ```
 
-h1 Данные и типы данных, используемые в приложении
+# Данные и типы данных, используемые в приложении
+
 ```
+
+**Интерфейс карточки**
+
+export interface ICard {
+	id: string;
+	description?: string;
+	image: string;
+	title: string;
+	category: categoryType;
+	price: number | null;
+	disabled?: boolean;
+}
