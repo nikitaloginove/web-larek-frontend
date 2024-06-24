@@ -186,8 +186,6 @@ export interface IContacts {
 
 ### Базовый код
 
-```
-
 **Класс API**
 
 ```
