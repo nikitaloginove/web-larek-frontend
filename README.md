@@ -188,7 +188,7 @@ export interface IContacts {
 
 ```
 
-#### Класс API
+**Класс API**
 
 ```
 
