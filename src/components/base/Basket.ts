@@ -54,4 +54,10 @@ export class Basket extends Component<IBasketView> {
 			).toString();
 		});
 	}
+
+	clean() {
+        this.items = [];
+        this.selected = 0;
+        this.total = '0 синапсов';
+    }
 }

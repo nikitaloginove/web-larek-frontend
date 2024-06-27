@@ -211,10 +211,8 @@ events.on('order:send', () => {
 	api
 		.post('/order', appData.order)
 		.then((res: ApiListResponse<string>) => {
-			appData.basket = [];
-			basket.items = [];
-			basket.selected = 0;
-			basket.total = '0 синапсов';
+			appData.cleanBasket; // Очистка модели корзины
+            basket.clean(); // Очистка представления корзины
 			appData.order = {
 				items: [],
 				total: null,

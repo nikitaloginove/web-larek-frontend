@@ -1,9 +1,9 @@
 import { ICard, IOrder, IAppState, IOrderForm, FormErrors } from '../../types';
-import { CardModel } from './CardModel';
+import { Card } from './Card';
 import { Model } from './Model';
 
 export class AppModelData extends Model<IAppState> {
-	catalog: CardModel[];
+	catalog: ICard[];
 	preview: string;
 	basket: ICard[] = [];
 	order: IOrder = {
@@ -17,9 +17,9 @@ export class AppModelData extends Model<IAppState> {
 	formErrors: FormErrors = {};
 
 	setCatalog(items: ICard[]) {
-		this.catalog = items.map((item) => new CardModel(item, this.events));
-		this.emitChanges('items:changed', { catalog: this.catalog });
-	}
+        this.catalog = items; // Теперь catalog является массивом ICard
+        this.emitChanges('items:changed', { catalog: this.catalog });
+    }
 
 	setPreview(item: ICard) {
 		this.preview = item.id;
@@ -87,5 +87,9 @@ export class AppModelData extends Model<IAppState> {
 		if (this.validateContacts()) {
 			this.events.emit('contacts:ready', this.order);
 		}
+	}
+
+	cleanBasket() {
+		this.basket = [];
 	}
 }

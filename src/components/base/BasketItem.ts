@@ -25,14 +25,14 @@ export class BasketItem extends Component<IBasketItem> {
 	}
 
 	set title(value: string) {
-		this._title.textContent = value;
-	}
+        this.setText(this._title, value); // Использование метода родительского класса
+    }
 
-	set number(value: number) {
-		this._number.textContent = value.toString();
-	}
+    set number(value: number) {
+        this.setText(this._number, value.toString()); // Использование метода родительского класса
+    }
 
-	set price(value: number) {
-		this._price.textContent = value + ' синапсов';
-	}
+    set price(value: number) {
+        this.setText(this._price, `${value} синапсов`); // Использование метода родительского класса
+    }
 }
