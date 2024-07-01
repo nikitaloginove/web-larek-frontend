@@ -205,29 +205,35 @@ events.on(
 );
 
 events.on('order:send', () => {
-	appData.order.total = +appData.getTotalBasketPrice().split(' ')[0];
-	appData.order.items = appData.basket.map((item) => item.id);
+    appData.order.total = +appData.getTotalBasketPrice().split(' ')[0];
+    appData.order.items = appData.basket.map((item) => item.id);
 
-	api
-		.post('/order', appData.order)
-		.then((res: ApiListResponse<string>) => {
-			appData.cleanBasket; // Очистка модели корзины
-            basket.clean(); // Очистка представления корзины
-			appData.order = {
-				items: [],
-				total: null,
-				address: '',
-				email: '',
-				phone: '',
-				payment: '',
-			};
-			page.counter = 0;
-			events.emit('order:finish', res);
-		})
-		.catch((err) => {
-			console.error(err);
-		});
+    api
+        .post('/order', appData.order)
+        .then((res: ApiListResponse<string>) => {
+            if (res.total > 0) { // Проверка успешности операции
+                appData.cleanBasket(); // Очистка модели корзины
+                basket.clean(); // Очистка представления корзины
+                appData.order = {
+                    items: [],
+                    total: null,
+                    address: '',
+                    email: '',
+                    phone: '',
+                    payment: '',
+                };
+                page.counter = 0;
+                events.emit('order:finish', res);
+            } else {
+                // Обработка случая, когда total равно 0 или отсутствует
+                console.error('Ошибка: заказ не был обработан.');
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+        });
 });
+
 
 // Окно успешной покупки
 
