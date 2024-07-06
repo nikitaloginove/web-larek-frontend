@@ -36,4 +36,9 @@ export class Order extends Form<IOrder> {
 			});
 		}
 	}
+
+	set address(value: string) {
+		(this.container.elements.namedItem('address') as HTMLInputElement).value = value;
+	}
+
 }

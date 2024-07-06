@@ -93,28 +93,41 @@ events.on('preview:changed', (item: ICard) => {
 	});
 });
 
+
 // Добавить товар в корзину
 
+// Обработчик события для обновления корзины и интерфейса
+
+function onChange() {
+    basket.items = appData.basket.map((item, index) => {
+        const basketItem = new BasketItem(cloneTemplate(cardBasketTemplate), {
+            onClick: () => events.emit('basket:delete', item),
+        });
+
+        return basketItem.render({
+            title: item.title,
+            price: item.price | 0,
+            number: index + 1,
+        });
+    });
+
+    page.counter = appData.getBasketAmount();
+    basket.total = appData.getTotalBasketPrice();
+    basket.selected = appData.getBasketAmount();
+
+    if (!appData.basket.length) {
+        basket.items = [];
+    }
+}
+
+// Подписываемся на события добавления товара
+
 events.on('card:toBasket', (item: ICard) => {
-	appData.addToBasket(item);
-
-	basket.items = appData.basket.map((item, index) => {
-		const basketItem = new BasketItem(cloneTemplate(cardBasketTemplate), {
-			onClick: () => events.emit('basket:delete', item),
-		});
-
-		return basketItem.render({
-			title: item.title,
-			price: item.price | 0,
-			number: index + 1,
-		});
-	});
-
-	page.counter = appData.getBasketAmount();
-	basket.total = appData.getTotalBasketPrice();
-	basket.selected = appData.getBasketAmount();
-	modal.close();
+    appData.addToBasket(item);
+    onChange(); // Вызов обновления интерфейса
+    modal.close();
 });
+
 
 // Блокируем прокрутку страницы если открыта модалка
 
@@ -139,15 +152,8 @@ events.on('bids:open', () => {
 // Удалить товар из корзины
 
 events.on('basket:delete', (item: ICard) => {
-	appData.deleteFromBasket(item.id);
-	basket.total = appData.getTotalBasketPrice();
-	page.counter = appData.getBasketAmount();
-	basket.selected = appData.getBasketAmount();
-	basket.renumerateItems();
-
-	if (!appData.basket.length) {
-		basket.items = [];
-	}
+    appData.deleteFromBasket(item.id);
+    onChange(); // Вызов обновления интерфейса
 });
 
 // Открыть окно заказа

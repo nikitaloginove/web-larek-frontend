@@ -177,3 +177,4 @@ export function createClassCategory(value: string): string {
 
 	return 'card__category_' + res;
 }
+
